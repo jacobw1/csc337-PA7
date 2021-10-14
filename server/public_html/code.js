@@ -17,7 +17,7 @@ function getTranslation(){
   lang1 = document.getElementById("lang1").value;
   lang2 = document.getElementById("lang2").value;
   type = lang1.charAt(0).toLowerCase() +"2"+ lang2.charAt(0).toLowerCase();
-  words = document.getElementById("textA").value.replace(" ","+");
+  words = document.getElementById("textA").value;
   url = "http://localhost:3000/translate/"+type+"/"+words;
   httpRequest.open("GET",url);
   httpRequest.send();

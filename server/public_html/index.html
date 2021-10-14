@@ -4,23 +4,26 @@
     <meta charset="UTF-8"/>
     <title>Translator</title>
     <script src="/code.js"></script>
+    <link rel="stylesheet" href="style.css">
   </head>
   <body>
     <h1 id="main_title">Translator</h1>
-    <div id="body1">
+    <div id="body1" class="content">
       <select id="lang1" name="lang1">
         <option value="english">English</option>
         <option value="spanish">Spanish</option>
         <option value="german">German</option>
       </select>
+      <br>
       <input id="textA" type="text" name="textA" value="" oninput = getTranslation()>
     </div>
-    <div id="body2">
+    <div id="body2" class="content">
       <select id="lang2" name="lang2">
         <option value="english">English</option>
         <option value="spanish">Spanish</option>
         <option value="german">German</option>
       </select>
+      <br>
       <input id="textB" type="text" name="textB" value="">
     </div>
   </body>
