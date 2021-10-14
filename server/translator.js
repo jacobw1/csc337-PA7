@@ -3,18 +3,21 @@ Author: Jacob Williams
 Purpose; using Node js we set up a local server that takes information from the url and creates a translation between English, German, and Spanish
 Usage: open console and type 'node translation.js' then open a browser and copy/paste url from console into browser
 */
-const http = require('http');
-const hostname = 'localhost';
-const port = 5000;
+const express = require('express');
+//const hostname = 'localhost';
+const app = express();
+const hostname = 'localhost'
+const port = 3000 ;
 const fs = require('fs');
 const readline = require('readline');
+
 // creates the dictionaries/ javascript objects
-let englishToSpanish = {};
-let englishToGerman = {};
-let spanishToEnglish = {};
-let germanToEnglish = {};
-let spanishToGerman = {};
-let germanToSpanish = {};
+englishToSpanish = {};
+englishToGerman = {};
+spanishToEnglish = {};
+germanToEnglish = {};
+spanishToGerman = {};
+germanToSpanish = {};
 // reads the data from the filename and creates a dicitonary and reverse dictionary
 async function loadTheData(filename, dictionary, reverseDictionary){
   const fileStream = fs.createReadStream(filename);
@@ -55,53 +58,55 @@ function combineDictionaries(){
 // code for startup
 loadTheData('Spanish.txt',englishToSpanish, spanishToEnglish);
 loadTheData('German.txt', englishToGerman, germanToEnglish);
-// creates the server object  and loads in data from url
-const server = http.createServer( function(req, res) {
-  res.setHeader('Content-Type', 'text/plain');
-  res.statusCode = 200;
-  //http://127.0.0.1:5000/translate/e2s/you+want+to+sail
-  if(req.url != '/favicon.ico'){
-      combineDictionaries();
-      urlComponents = req.url.split('/');
-      if(urlComponents.length > 2){
-      type = urlComponents[2];
-      content = urlComponents[3].split('+');
-      if(type == 'e2s'){
-        var retVal = '';
-        for(let word of content){
-          retVal += englishToSpanish[word] + ' ';
-        }
-      }else if(type == 'e2g'){
-        var retVal = '';
-        for(let word of content){
-          retVal += englishToGerman[word] + ' ';
-        }
-      }else if(type == 's2e'){
-        var retVal = '';
-        for(let word of content){
-          retVal += spanishToEnglish[word] + ' ';
-        }
-      }else if(type == 'g2e'){
-        var retVal = '';
-        for(let word of content){
-          retVal += germanToEnglish[word] + ' ';
-        }
-      }else if(type == 's2g'){
-        var retVal = '';
-        for(let word of content){
-          retVal += spanishToGerman[word] + ' ';
-        }
-      }else if(type == 'g2s'){
-        var retVal = '';
-        for(let word of content){
-          retVal += germanToSpanish[word] + ' ';
-        }
-      }
-      res.end(retVal);
+combineDictionaries();
+
+function translateWords(content,type){
+  if(type == 'e2s'){
+    var retVal = '';
+    for(let word of content){
+      retVal += englishToSpanish[word] + ' ';
     }
+  }else if(type == 'e2g'){
+    var retVal = '';
+    for(let word of content){
+      retVal += englishToGerman[word] + ' ';
+    }
+  }else if(type == 's2e'){
+    var retVal = '';
+    for(let word of content){
+      retVal += spanishToEnglish[word] + ' ';
+    }
+  }else if(type == 'g2e'){
+    var retVal = '';
+    for(let word of content){
+      retVal += germanToEnglish[word] + ' ';
+    }
+  }else if(type == 's2g'){
+    var retVal = '';
+    for(let word of content){
+      retVal += spanishToGerman[word] + ' ';
+    }
+  }else if(type == 'g2s'){
+    var retVal = '';
+    for(let word of content){
+      retVal += germanToSpanish[word] + ' ';
+    }
+  }
+  return retVal;
+}
+
+app.use(express.static('public_html'));
+
+app.get('/:translate/:type/:words', function(req, res){
+  if(req.url != '/favicon.ico'){
+    var type = req.params.type;
+    var content = req.params.words.split('+');
+    translated_phrase = translateWords(content,type);
+    console.log("return val = "+ translated_phrase);
+    res.end(translated_phrase);
   }
 });
 // listens for the server to start and prints url into console
-server.listen(port, hostname,function () {
-  console.log(`Server running at http://${hostname}:${port}/translate/TYPE/CONTENT`);
+app.listen(port,function () {
+  console.log(`App listening at http://localhost:${port}`);
 });

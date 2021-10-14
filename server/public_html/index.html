@@ -3,24 +3,25 @@
   <head>
     <meta charset="UTF-8"/>
     <title>Translator</title>
+    <script src="/code.js"></script>
   </head>
   <body>
     <h1 id="main_title">Translator</h1>
     <div id="body1">
-      <select class="languages" name="lang1">
+      <select id="lang1" name="lang1">
         <option value="english">English</option>
         <option value="spanish">Spanish</option>
         <option value="german">German</option>
       </select>
-      <textarea name="textA" rows="8" cols="80"></textarea>
+      <input id="textA" type="text" name="textA" value="" oninput = getTranslation()>
     </div>
     <div id="body2">
-      <select class="languages" name="lang2">
+      <select id="lang2" name="lang2">
         <option value="english">English</option>
         <option value="spanish">Spanish</option>
         <option value="german">German</option>
       </select>
-      <textarea name="textA" rows="8" cols="80"></textarea>
+      <input id="textB" type="text" name="textB" value="">
     </div>
   </body>
 </html>
