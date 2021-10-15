@@ -5,20 +5,22 @@ function getTranslation(){
     return false;
   }
 
-  httpRequest.onreadystatechange = () => {
-    if (httpRequest.readyState === XMLHttpRequest.DONE) {
-      if (httpRequest.status === 200) {
-        var textB = document.getElementById("textB");
-        textB.value = httpRequest.responseText;
-      } else { alert('ERROR'); }
+  if(!(document.getElementById("textA").value.length <= 0) ){
+
+    httpRequest.onreadystatechange = () => {
+      if (httpRequest.readyState === XMLHttpRequest.DONE) {
+        if (httpRequest.status === 200) {
+          var textB = document.getElementById("textB");
+          textB.value = httpRequest.responseText;
+        } else { alert('ERROR'); }
+      }
     }
+    lang1 = document.getElementById("lang1").value;
+    lang2 = document.getElementById("lang2").value;
+    type = lang1.charAt(0).toLowerCase() +"2"+ lang2.charAt(0).toLowerCase();
+    words = document.getElementById("textA").value;
+    url = "http://localhost:3000/translate/"+type+"/"+words;
+    httpRequest.open("GET",url);
+    httpRequest.send();
   }
-  console.log("get here 1");
-  lang1 = document.getElementById("lang1").value;
-  lang2 = document.getElementById("lang2").value;
-  type = lang1.charAt(0).toLowerCase() +"2"+ lang2.charAt(0).toLowerCase();
-  words = document.getElementById("textA").value;
-  url = "http://localhost:3000/translate/"+type+"/"+words;
-  httpRequest.open("GET",url);
-  httpRequest.send();
 }

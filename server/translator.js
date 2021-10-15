@@ -91,20 +91,23 @@ function translateWords(content,type){
     for(let word of content){
       retVal += germanToSpanish[word] + ' ';
     }
+  }else{
+    var retVal = '';
+    for(let word of content){
+      retVal += word + ' ';
+    }
   }
   return retVal;
 }
 
 app.use(express.static('public_html'));
 
-app.get('/:translate/:type/:words', function(req, res){
+app.get('/translate/:type/:words', function(req, res){
   if(req.url != '/favicon.ico'){
     var type = req.params.type;
     var content = req.params.words.split(' ');
-    console.log(content);
-    //TODO fix spanish to german and german to spanish 
+    //TODO fix spanish to german and german to spanish
     translated_phrase = translateWords(content,type);
-    console.log("return val = "+ translated_phrase);
     translated_phrase = translated_phrase.replace("undefined", "?");
     res.end(translated_phrase);
   }
