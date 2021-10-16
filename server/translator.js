@@ -1,10 +1,11 @@
 /*
 Author: Jacob Williams
-Purpose; using Node js we set up a local server that takes information from the url and creates a translation between English, German, and Spanish
+Purpose; creates the trnalating logic and creates the server for public_html. When interatcting with the web page ajax sends requests to
+          this file to return a translated text.
 Usage: open console and type 'node translation.js' then open a browser and copy/paste url from console into browser
 */
+// using express instead of http
 const express = require('express');
-//const hostname = 'localhost';
 const app = express();
 const hostname = 'localhost'
 const port = 3000 ;
@@ -58,9 +59,10 @@ function combineDictionaries(){
 // code for startup
 loadTheData('Spanish.txt',englishToSpanish, spanishToEnglish);
 loadTheData('German.txt', englishToGerman, germanToEnglish);
-combineDictionaries();
 
+// given a list of words and String translation type this returns a complete translated string
 function translateWords(content,type){
+  combineDictionaries();
   if(type == 'e2s'){
     var retVal = '';
     for(let word of content){
@@ -100,13 +102,13 @@ function translateWords(content,type){
   return retVal;
 }
 
+// sets up path for static files to be used
 app.use(express.static('public_html'));
-
+// given the special format in the url this will return a phrase to be sent back to code.js which will change the DOM
 app.get('/translate/:type/:words', function(req, res){
   if(req.url != '/favicon.ico'){
     var type = req.params.type;
     var content = req.params.words.split(' ');
-    //TODO fix spanish to german and german to spanish
     translated_phrase = translateWords(content,type);
     translated_phrase = translated_phrase.replace("undefined", "?");
     res.end(translated_phrase);

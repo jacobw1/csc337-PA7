@@ -9,7 +9,7 @@
   <body>
     <h1 id="main_title">Translator</h1>
     <div id="body1" class="content">
-      <select id="lang1" name="lang1">
+      <select id="lang1" name="lang1" onchange = getTranslation()>
         <option value="english">English</option>
         <option value="spanish">Spanish</option>
         <option value="german">German</option>
@@ -18,7 +18,7 @@
       <input id="textA" type="text" name="textA" value="" oninput = getTranslation()>
     </div>
     <div id="body2" class="content">
-      <select id="lang2" name="lang2">
+      <select id="lang2" name="lang2" onchange = getTranslation()>
         <option value="english">English</option>
         <option value="spanish">Spanish</option>
         <option value="german">German</option>

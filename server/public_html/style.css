@@ -1,3 +1,7 @@
+/*
+Author: Jacob Williams
+Purpose: Style.css contains all style desings and layouts for public_html
+*/
 body {
     margin: 0;
     padding: 0;
@@ -8,13 +12,13 @@ body {
   height: 20%;
   padding: 30px;
   margin: 0px;
-  background-color: rgb(255, 64, 64);
+  background-color:  #ffc34d;
   text-align: center;
   font-size: 40px;
 }
 
 div{
-  background-color: rgb(255, 187, 110);
+  background-color:  #999999;
   border: solid black 3px;
   text-align: center;
 }

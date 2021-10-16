@@ -1,5 +1,12 @@
-function getTranslation(){
+/*
+Author: Jacob Williams
+Purpose: This code interacts with the html event handlers and the server
+        Everytime a language is changed or somethig is typed this function sends
+        requests to the server using ajax
+Usage: type words, change langueges, enter special format in url
+*/
 
+function getTranslation(){
   var httpRequest = new XMLHttpRequest();
   if (!httpRequest) {
     return false;
